@@ -15,6 +15,7 @@ class NumControl extends Rete.Control {
     onChange: (value: any) => void;
   };
   update?: () => void;
+  component: any;
 
   static component = ({ value, onChange }) => (
     <input
@@ -36,7 +37,7 @@ class NumControl extends Rete.Control {
     super(key);
     this.emitter = emitter;
     this.key = key;
-    // this.component = NumControl.component;
+    this.component = NumControl.component;
 
     const initial = node.data[key] || 0;
 
