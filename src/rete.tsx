@@ -4,18 +4,17 @@ import ReactRenderPlugin from "rete-react-render-plugin";
 import ConnectionPlugin from "rete-connection-plugin";
 import AreaPlugin from "rete-area-plugin";
 import { NodeEditor } from "rete";
-// import { MyNode } from "./MyNode";
 
 var numSocket = new Rete.Socket("Number value");
 
 class NumControl extends Rete.Control {
   emitter: NodeEditor;
   props: {
-    readonly: boolean,
-    value: any,
-    onChange: (value: any) => void
-  }
-  update?: () => void
+    readonly: boolean;
+    value: any;
+    onChange: (value: any) => void;
+  };
+  update?: () => void;
 
   static component = ({ value, onChange }) => (
     <input
@@ -28,7 +27,12 @@ class NumControl extends Rete.Control {
     />
   );
 
-  constructor(emitter: Rete.NodeEditor, key: string, node: Rete.Node, readonly = false) {
+  constructor(
+    emitter: Rete.NodeEditor,
+    key: string,
+    node: Rete.Node,
+    readonly = false
+  ) {
     super(key);
     this.emitter = emitter;
     this.key = key;
@@ -43,7 +47,7 @@ class NumControl extends Rete.Control {
       onChange: (v) => {
         this.setValue(v);
         this.emitter.trigger("process");
-      }
+      },
     };
   }
 
@@ -74,7 +78,6 @@ class NumComponent extends Rete.Component {
 class AddComponent extends Rete.Component {
   constructor() {
     super("Add");
-    // this.data.component = MyNode; // optional
   }
 
   builder(node) {
@@ -134,7 +137,14 @@ export async function createEditor(container: HTMLElement) {
   editor.connect(n1.outputs.get("num"), add.inputs.get("num1"));
   editor.connect(n2.outputs.get("num"), add.inputs.get("num2"));
 
-  editor.on(["process", "nodecreated", "noderemoved", "connectioncreated", "connectionremoved"],
+  editor.on(
+    [
+      "process",
+      "nodecreated",
+      "noderemoved",
+      "connectioncreated",
+      "connectionremoved",
+    ],
     async () => {
       console.log("process");
       await engine.abort();
@@ -148,28 +158,3 @@ export async function createEditor(container: HTMLElement) {
 
   return editor;
 }
-
-// export function useRete() {
-//   const [container, setContainer] = useState(null);
-//   const editorRef = useRef();
-
-//   useEffect(() => {
-//     if (container) {
-//       createEditor(container).then((value) => {
-//         console.log("created");
-//         editorRef.current = value;
-//       });
-//     }
-//   }, [container]);
-
-//   useEffect(() => {
-//     return () => {
-//       if (editorRef.current) {
-//         console.log("destroy");
-//         editorRef.current.destroy();
-//       }
-//     };
-//   }, []);
-
-//   return [setContainer];
-// }

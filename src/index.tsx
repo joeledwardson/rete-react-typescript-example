@@ -6,31 +6,25 @@ function Editor() {
   const divRef = createRef<HTMLInputElement>();
 
   useEffect(() => {
-    if(divRef.current) {
+    if (divRef.current) {
       createEditor(divRef.current);
     } else {
       throw new Error("div ref not initialized!");
     }
-  })
+  });
 
   return (
     <div
       style={{
         width: "100vw",
-        height: "100vh"
+        height: "100vh",
       }}
       ref={divRef}
     />
   );
 }
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <Editor />
-//     </div>
-//   );
-// }
+
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(<Editor />, rootElement);
