@@ -1,11 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
+import React, { useEffect, useState, RefObject, createRef } from "react";
+import ReactDOM from "react-dom";
+import { createEditor } from "./rete";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+function Editor() {
+  const divRef = createRef<HTMLInputElement>();
 
+  useEffect(() => {
+    if(divRef.current) {
+      createEditor(divRef.current);
+    } else {
+      throw new Error("div ref not initialized!");
+    }
+  })
+
+  return (
+    <div
+      style={{
+        width: "100vw",
+        height: "100vh"
+      }}
+      ref={divRef}
+    />
+  );
+}
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <Editor />
+//     </div>
+//   );
+// }
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<Editor />, rootElement);
